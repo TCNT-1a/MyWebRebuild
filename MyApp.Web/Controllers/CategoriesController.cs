@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MyApp.Web.Infra.Data;
+using MyApp.Web.ViewModel;
 
 namespace MyApp.Web.Controllers
 {
@@ -55,14 +56,15 @@ namespace MyApp.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Slug,isPublished,Id,CreatedDate,UpdatedDate,IsDeleted")] Category category)
+        public async Task<IActionResult> Create([Bind("Name")] CategoryViewModel category)
         {
-            if (TryValidateModel(category))
+            if (ModelState.IsValid)
             {
                 _context.Add(category);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            
             //if (ModelState.IsValid)
             //{
             //    _context.Add(category);

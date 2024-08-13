@@ -13,11 +13,7 @@ namespace MyApp.Web.Infra.Data
     public class Category : BlogEntity
     {
         public string Name { get; set; }
-        [JsonIgnore]
-        [BindNever]
         public HeadingTag HeadingTag { get; set; }
-        [JsonIgnore]
-        [BindNever]
         public virtual List<Post> Posts { get; set; }
     }
 }
