@@ -1,0 +1,12 @@
+﻿
+@{
+    Layout = "_Layout";
+    ViewData["title"] = "Simple Binding";
+}
+<form asp-controller="testbinding" asp-action="simplebinding" method="post" class="w-[200px] flex flex-col space-y-2 ">
+    <input class="txt-primary" name="name" placeholder="name" />
+    <input class="txt-primary" name="birthyear" placeholder="birthyear" />
+    <button class="btn-primary" type="submit">Submit</button>
+</form>
+<h2>@ViewData["name"]</h2>
+<h2>@ViewData["birthyear"]</h2>
