@@ -2,6 +2,7 @@
 {
     public static class Mapper
     {
+
         public class  PropertyCoppier<TParent,TChild> where TParent : class  
                                                       where TChild : class
         {

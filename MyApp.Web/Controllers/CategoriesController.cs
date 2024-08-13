@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.WebSockets;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using MyApp.Web.Helper;
 using MyApp.Web.Infra.Data;
 using MyApp.Web.ViewModel;
 
@@ -56,11 +58,13 @@ namespace MyApp.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name")] CategoryViewModel category)
+        public async Task<IActionResult> Create([Bind("Name, Slug, Publish")] CategoryViewModel category)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(category);
+                var cat = new Category();
+                Mapper.PropertyCoppier<CategoryViewModel, Category>.Copy(category, cat);
+                _context.Categories.Add(cat );
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

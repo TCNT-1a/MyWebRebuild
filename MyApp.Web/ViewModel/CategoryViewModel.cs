@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MyApp.Web.Abstraction;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyApp.Web.ViewModel
 {
@@ -6,5 +7,7 @@ namespace MyApp.Web.ViewModel
     {
         [Required (ErrorMessage ="Field này bắt buột")]
         public string Name { get; set; }
+        public string Slug { get; set; }
+        public bool isPublished { get; set; }
     }
 }
