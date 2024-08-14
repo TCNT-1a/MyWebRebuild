@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.WebSockets;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using MyApp.Web.Helper;
 using MyApp.Web.Infra.Data;
-using MyApp.Web.ViewModel;
 
 namespace MyApp.Web.Controllers
 {
@@ -25,7 +22,7 @@ namespace MyApp.Web.Controllers
         public async Task<IActionResult> Index()
         {
               return _context.Categories != null ? 
-                          View(await _context.Categories.ToListAsync()) :
+                          View(await _context.Categories.Where(p=>p.IsDeleted==false).ToListAsync()) :
                           Problem("Entity set 'BloggingContext.Categories'  is null.");
         }
 
@@ -58,23 +55,14 @@ namespace MyApp.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name, Slug, Publish")] CategoryViewModel category)
+        public async Task<IActionResult> Create([Bind("Name,Slug,isPublished")] Category category)
         {
             if (ModelState.IsValid)
             {
-                var cat = new Category();
-                Mapper.PropertyCoppier<CategoryViewModel, Category>.Copy(category, cat);
-                _context.Categories.Add(cat );
+                _context.Add(category);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            
-            //if (ModelState.IsValid)
-            //{
-            //    _context.Add(category);
-            //    await _context.SaveChangesAsync();
-            //    return RedirectToAction(nameof(Index));
-            //}
             return View(category);
         }
 
@@ -99,7 +87,7 @@ namespace MyApp.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Name,Slug,isPublished,Id,CreatedDate,UpdatedDate,IsDeleted")] Category category)
+        public async Task<IActionResult> Edit(int id, [Bind("Name,Slug,isPublished")] Category category)
         {
             if (id != category.Id)
             {
@@ -159,7 +147,9 @@ namespace MyApp.Web.Controllers
             var category = await _context.Categories.FindAsync(id);
             if (category != null)
             {
-                _context.Categories.Remove(category);
+                category.IsDeleted = true;
+                _context.Categories.Update(category);
+                //_context.Categories.Remove(category);
             }
             
             await _context.SaveChangesAsync();

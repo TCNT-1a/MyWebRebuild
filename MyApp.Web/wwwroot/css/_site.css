@@ -48,7 +48,22 @@ div>p>a{
 .form-group label{
     min-width: 120px;
 }
-
+dl{
+    @apply flex flex-row;flex-wrap: wrap;
+}
+dl > dt {
+    @apply w-1/5;
+    display: block;
+    font-weight: bold;
+    clear: right;
+}
+dl > dd{
+    margin:auto;
+    display: block;
+}
+dl > dd {
+    @apply w-4/5;
+}
 .form-group > input[type="text"], .form-group > input[type="datetime-local"] {
     min-width: 239px;
 }
@@ -86,7 +101,6 @@ td {
 .boxhover {
     @apply hover:bg-bg-hover;
 }
-
 
 .color1 {
     color: var(--color1);

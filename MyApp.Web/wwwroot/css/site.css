@@ -1206,6 +1206,10 @@ input:checked + .toggle-bg {
   width: fit-content;
 }
 
+.w-full {
+  width: 100%;
+}
+
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -1701,6 +1705,25 @@ div>p>a:focus:is(.dark *) {
 
 .form-group label{
   min-width: 120px;
+}
+
+dl {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+dl > dt {
+  width: 20%;
+  display: block;
+  font-weight: bold;
+  clear: right;
+}
+
+dl > dd{
+  margin:auto;
+  display: block;
+  width: 80%;
 }
 
 .form-group > input[type="text"], .form-group > input[type="datetime-local"] {

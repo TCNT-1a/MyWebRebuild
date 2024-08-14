@@ -13,7 +13,7 @@
 	  <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.32" />
 	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.32" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.31">
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.32">
 	    <PrivateAssets>all</PrivateAssets>
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
@@ -40,6 +40,7 @@
     <Folder Include="Core\Service\" />
     <Folder Include="Data\" />
     <Folder Include="Infra\Migrations\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>
