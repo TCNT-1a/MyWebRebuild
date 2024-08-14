@@ -49,7 +49,8 @@ div>p>a{
     min-width: 120px;
 }
 dl{
-    @apply flex flex-row;flex-wrap: wrap;
+    @apply flex flex-row;
+    flex-wrap: wrap;
 }
 dl > dt {
     @apply w-1/5;
