@@ -18,6 +18,10 @@ Add-Migration InitialCreate -Project MyApp.Infrastructure -StartupProject MyApp.
 Update-Database -Project MyApp.Infrastructure -StartupProject MyApp.Web
 
 
+Add-Migration InitialCreate -Project MyApp.Web -StartupProject MyApp.Web -Context MyApp.Web.Infra.Data.BloggingContext
+Update-Database -Project MyApp.Web -StartupProject MyApp.Web -Context MyApp.Web.Infra.Data.BloggingContext
+
+
 dotnet aspnet-codegenerator razorpage -m MyApp.Infrastructure.Data.Post -dc MyWebApp.Infrastructure.BlogingContext -outDir MyApp.Web\Views\Blog -udl --referenceScriptLibraries
 
 dotnet aspnet-codegenerator razorpage -m MyApp.Infrastructure.Data.Post -dc MyWebApp.Infrastructure.BlogingContext -outDir MyApp.Web\Views\Blog -udl --referenceScriptLibraries
