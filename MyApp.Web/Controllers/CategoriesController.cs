@@ -89,6 +89,8 @@ namespace MyApp.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Name,Slug,isPublished")] Category category)
         {
+            category.Id = id;
+            //var categories = _context.Categories.FirstOrDefault(p => p.Id == id);
             if (id != category.Id)
             {
                 return NotFound();
