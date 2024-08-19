@@ -10,7 +10,7 @@ namespace MyApp.Web.Infra.Data
     public class Tag: BlogEntity
     {
         public string Name { get; set; }
-        public HeadingTag HeadingTag { get; set; }
-        public virtual List<Post> Posts { get; set; }
+        public HeadingTag? HeadingTag { get; set; }
+        public virtual List<Post>? Posts { get; set; }
     }
 }

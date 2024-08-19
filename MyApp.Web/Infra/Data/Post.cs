@@ -12,9 +12,9 @@ namespace MyApp.Web.Infra.Data
         public string Title { get; set; }
         public int PostView { get; set; }
         public string Content { get; set; }
-        public virtual User Author { get; set; }
-        public virtual List<Tag> Tags { get; set; }
-        public virtual Category Category { get; set; }
-        public virtual HeadingTag HeadingTag { get; set; }
+        public virtual User? Author { get; set; }
+        public virtual List<Tag>? Tags { get; set; }
+        public virtual Category? Category { get; set; }
+        public virtual HeadingTag? HeadingTag { get; set; }
     }
 }
