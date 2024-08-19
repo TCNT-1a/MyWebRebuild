@@ -1136,6 +1136,10 @@ input:checked + .toggle-bg {
   margin-bottom: 0.5rem;
 }
 
+.ml-1 {
+  margin-left: 0.25rem;
+}
+
 .mt-2 {
   margin-top: 0.5rem;
 }
@@ -1639,8 +1643,7 @@ input:checked + .toggle-bg {
 
 }
 
-div>p>a, td a, form a{
-  /*@apply btn-primary;*/
+div>p>a, td a, form a, div>a{
   text-decoration:underline;
   color: blue;
 }
@@ -1734,6 +1737,11 @@ form input[value="Delete"]:hover:is(.dark *) {
 form input[value="Delete"]:focus:is(.dark *) {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(119 29 29 / var(--tw-ring-opacity));
+}
+
+form {
+  display: flex;
+  flex-direction: column;
 }
 
 /*https://flowbite.com/docs/components/buttons/*/
@@ -2060,6 +2068,14 @@ h6 {
 
 .body2 {
   font-size: 1rem;
+}
+
+tr:hover:hover {
+  background-color: var(--color-bg-hover);
+}
+
+th, td {
+  border-bottom: 1px solid #ddd;
 }
 
 .hover\:border-gray-300:hover {

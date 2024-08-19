@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <title>Aircap-@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/style.css" />
     <script src="~/js/site.js"></script>
     @RenderSection("header", required:false)
 
@@ -20,7 +21,7 @@
                 <partial name="_LeftBar"></partial>
             </ul>
         </div>
-        <div class="w-full">@RenderBody()</div>
+        <div class="w-full ml-1 p-1">@RenderBody()</div>
     </div>
     @*@RenderSection("footer", required:false)*@
     <partial name="_Footer"></partial>
