@@ -39,7 +39,7 @@
     --easing: cubic-bezier(.5,0,.5,1);
     --stagger: calc(var(--semi-duration)*-1/2)
 }
-div>p>a, td a, form a, div>a{
+a{
     text-decoration:underline;
     color: blue;
 }
