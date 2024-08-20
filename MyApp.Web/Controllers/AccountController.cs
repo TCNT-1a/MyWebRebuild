@@ -14,8 +14,8 @@ namespace MyApp.Web.Controllers
     //[Route("taikhoan")]
     public class AccountController : Controller
     {
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        //private readonly UserManager<ApplicationUser> userManager;
+        //private readonly SignInManager<ApplicationUser> _signInManager;
 
         private readonly BloggingContext _context;
         public AccountController(BloggingContext context)

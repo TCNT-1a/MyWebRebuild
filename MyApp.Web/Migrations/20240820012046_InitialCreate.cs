@@ -80,7 +80,7 @@ namespace MyApp.Web.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    HeadingTagId = table.Column<int>(type: "INTEGER", nullable: false),
+                    HeadingTagId = table.Column<int>(type: "INTEGER", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
@@ -94,8 +94,7 @@ namespace MyApp.Web.Migrations
                         name: "FK_Tags_HeadingTags_HeadingTagId",
                         column: x => x.HeadingTagId,
                         principalTable: "HeadingTags",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -107,9 +106,9 @@ namespace MyApp.Web.Migrations
                     Title = table.Column<string>(type: "TEXT", nullable: false),
                     PostView = table.Column<int>(type: "INTEGER", nullable: false),
                     Content = table.Column<string>(type: "TEXT", nullable: false),
-                    AuthorId = table.Column<int>(type: "INTEGER", nullable: false),
-                    CategoryId = table.Column<int>(type: "INTEGER", nullable: false),
-                    HeadingTagId = table.Column<int>(type: "INTEGER", nullable: false),
+                    AuthorId = table.Column<int>(type: "INTEGER", nullable: true),
+                    CategoryId = table.Column<int>(type: "INTEGER", nullable: true),
+                    HeadingTagId = table.Column<int>(type: "INTEGER", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false)
@@ -121,20 +120,17 @@ namespace MyApp.Web.Migrations
                         name: "FK_Posts_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Posts_HeadingTags_HeadingTagId",
                         column: x => x.HeadingTagId,
                         principalTable: "HeadingTags",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Posts_User_AuthorId",
                         column: x => x.AuthorId,
                         principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(

@@ -11,7 +11,7 @@ using MyApp.Web.Infra.Data;
 namespace MyApp.Web.Migrations
 {
     [DbContext(typeof(BloggingContext))]
-    [Migration("20240814082136_InitialCreate")]
+    [Migration("20240820012046_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,10 +96,10 @@ namespace MyApp.Web.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("AuthorId")
+                    b.Property<int?>("AuthorId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("CategoryId")
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Content")
@@ -109,7 +109,7 @@ namespace MyApp.Web.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("HeadingTagId")
+                    b.Property<int?>("HeadingTagId")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsDeleted")
@@ -145,7 +145,7 @@ namespace MyApp.Web.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("HeadingTagId")
+                    b.Property<int?>("HeadingTagId")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsDeleted")
@@ -243,21 +243,15 @@ namespace MyApp.Web.Migrations
                 {
                     b.HasOne("MyApp.Web.Infra.Data.User", "Author")
                         .WithMany()
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AuthorId");
 
                     b.HasOne("MyApp.Web.Infra.Data.Category", "Category")
                         .WithMany("Posts")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
 
                     b.HasOne("MyApp.Web.Infra.Data.HeadingTag", "HeadingTag")
                         .WithMany()
-                        .HasForeignKey("HeadingTagId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("HeadingTagId");
 
                     b.Navigation("Author");
 
@@ -270,9 +264,7 @@ namespace MyApp.Web.Migrations
                 {
                     b.HasOne("MyApp.Web.Infra.Data.HeadingTag", "HeadingTag")
                         .WithMany()
-                        .HasForeignKey("HeadingTagId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("HeadingTagId");
 
                     b.Navigation("HeadingTag");
                 });

@@ -68,11 +68,11 @@ static void BuildSwagger(WebApplicationBuilder builder)
 }
 static void BuildIdentity(WebApplicationBuilder builder)
 {
-    builder.Services.AddDbContext<MyAppDbContext>(options =>
-        options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+    //builder.Services.AddDbContext<MyAppDbContext>(options =>
+    //    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-    builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<BloggingContext>();
+    //builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    //.AddEntityFrameworkStores<BloggingContext>();
 
 }
 
