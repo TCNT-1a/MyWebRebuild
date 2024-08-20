@@ -1,0 +1,11 @@
+﻿@{
+    Layout = "_Layout";
+}
+<h1>System infor</h1>
+
+@{
+    System.Diagnostics.Process p = System.Diagnostics.Process.GetCurrentProcess();
+    long ram = p.WorkingSet64;
+    string str = $"RAM: {ram / 1024 / 1024} MB";
+}
+<h3>@str</h3>
