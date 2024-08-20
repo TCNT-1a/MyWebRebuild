@@ -1184,11 +1184,6 @@ input:checked + .toggle-bg {
   height: 2.25rem;
 }
 
-.h-fit {
-  height: -moz-fit-content;
-  height: fit-content;
-}
-
 .w-1\/2 {
   width: 50%;
 }
@@ -1203,11 +1198,6 @@ input:checked + .toggle-bg {
 
 .w-\[200px\] {
   width: 200px;
-}
-
-.w-fit {
-  width: -moz-fit-content;
-  width: fit-content;
 }
 
 .w-full {
@@ -1688,8 +1678,8 @@ dl > dd{
 
 form>.form-group > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
-  margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
+  margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
 }
 
 form input[value="Delete"] {
@@ -1739,9 +1729,25 @@ form input[value="Delete"]:focus:is(.dark *) {
   --tw-ring-color: rgb(119 29 29 / var(--tw-ring-opacity));
 }
 
-form {
+form input[value="Delete"] {
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.row form {
   display: flex;
   flex-direction: column;
+}
+
+div.row {
+  display: flex;
+  flex-direction: column;
+}
+
+div.row > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
 }
 
 /*https://flowbite.com/docs/components/buttons/*/
@@ -1844,6 +1850,11 @@ form {
 .btn-danger:focus:is(.dark *) {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(119 29 29 / var(--tw-ring-opacity));
+}
+
+.btn-danger {
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
 .txt-primary {
