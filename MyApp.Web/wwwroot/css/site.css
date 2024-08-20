@@ -1643,7 +1643,7 @@ input:checked + .toggle-bg {
 
 }
 
-div>p>a, td a, form a, div>a{
+a{
   text-decoration:underline;
   color: blue;
 }
