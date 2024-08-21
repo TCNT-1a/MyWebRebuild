@@ -52,6 +52,10 @@ namespace MyApp.Web.Controllers
         // GET: Posts/Create
         public IActionResult Create()
         {
+            var categories = _context.Categories.ToListAsync();
+            var tags = _context.Tags.ToListAsync();
+            ViewData["tags"] = tags;
+            ViewData["categories"] = categories;
             return View();
         }
 
