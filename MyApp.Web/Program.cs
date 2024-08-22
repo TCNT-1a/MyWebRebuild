@@ -9,6 +9,7 @@ using MyApp.Web.Abstraction;
 using MyApp.Web.Core.Batch;
 using MyApp.Web.Core.Exceptions;
 using MyApp.Web.Core.Filter;
+using MyApp.Web.Core.Service;
 using MyApp.Web.Infra.Data;
 using Quartz;
 
@@ -54,6 +55,10 @@ static void AppConfigSwagger(WebApplication app)
             c.RoutePrefix = "swagger";
         }
     );
+}
+static void BuildMarkDown(WebApplicationBuilder builder)
+{
+    builder.Services.AddSingleton<IMarkdownService, MarkdownService>();
 }
 static void BuildSwagger(WebApplicationBuilder builder)
 {
@@ -139,6 +144,7 @@ static void ConfigBuilder(ref WebApplicationBuilder builder)
     BuildSwagger(builder);
     BuildConfigDbContext(builder);
     BuildIdentity(builder);
+    BuildMarkDown(builder);
     builder.Services.Configure<ApiBehaviorOptions>(options =>
     {
         options.SuppressModelStateInvalidFilter = false;

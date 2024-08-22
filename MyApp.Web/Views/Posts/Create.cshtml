@@ -4,68 +4,94 @@
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var categories = ViewData["categories"] as List<Category>;
-    var tags = ViewData["tags"] as List<Tag>;
+    var tags = ViewBag.tags as List<SelectListItem>;
 }
+<h4>Create Post</h4>
 
-<h1>Create</h1>
-
-<h4>Post</h4>
-<hr />
-<divusing MyApp.Web.Infra.Data; #line default <div class="col-md-4">
-    <form asp-action="Create">
+<div class="w-4/5">
+    <form asp-action="Create" class="flex flex-col space-y-2">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group">
+        <div class="flex flex-col">
             <label asp-for="Title" class="control-label"></label>
             <input asp-for="Title" class="form-control" />
             <span asp-validation-for="Title" class="text-danger"></span>
         </div>
-        <div class="form-group">
+        <div class="flex flex-col">
             <label asp-for="Category" class="control-label"></label>
-            <select asp-for="Category" class="form-control w-5" asp-items="ViewBag.CategoryId">
-                <option value="">-- Select Category --</option>
-                    @if (categories != null)
-                    {
-                        foreach (var category in categories)
-                        {
-                        <option value="@category.Id">@category.Name</option>
-                        }
-                    }
+            <select asp-for="Category" class="form-control w-1/4" asp-items="ViewBag.categories">
             </select>
             <span asp-validation-for="Category" class="text-danger"></span>
-            <div class="form-group">
-                <label asp-for="PostView" class="control-label"></label>
-                <input asp-for="PostView" class="form-control" />
-                <span asp-validation-for="PostView" class="text-danger"></span>
+        </div>
+        <div class="flex flex-col">
+            <label asp-for="Tags" class="control-label w-1/4"></label>
+            @{
+                foreach(var tag in tags){
+                        <div>
+                            <input type="checkbox" name="tags" value="@tag.Value" />
+                            <label for="music">@tag.Text</label>
+                        </div>
+                }
+            }           
+        </div>
+        <div class="flex flex-col">
+            <label asp-for="PostView" class="control-label"></label>
+            <input asp-for="PostView" class="form-control" />
+            <span asp-validation-for="PostView" class="text-danger"></span>
+        </div>
+        <div class="flex flex-col">
+            <label asp-for="Content" class="control-label"></label>
+            <div class="flex flex-row bg-gray-100">
+                <div class="line-numbers w-[45px]" id="lineNumbers"></div>
+                <textarea asp-for="Content" 
+                class="form-control " id="codeArea" rows="10">aa</textarea>
             </div>
-            <div class="form-group">
-                <label asp-for="Content" class="control-label"></label>
-                <input asp-for="Content" class="form-control" />
-                <span asp-validation-for="Content" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
-                <span asp-validation-for="CreatedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UpdatedDate" class="control-label"></label>
-                <input asp-for="UpdatedDate" class="form-control" />
-                <span asp-validation-for="UpdatedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsDeleted" /> @Html.DisplayNameFor(model =>
-                    model.IsDeleted)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-    </form>
-    </div>
-    </div>
+            
+            <span asp-validation-for="Content" class="text-danger"></span>
+        </div>
 
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
+        <div class="flex flex-col form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
+            <div>
+                <a asp-action="Index">Back to List</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    const textarea = document.getElementById('codeArea');
+    const lineNumbers = document.getElementById('lineNumbers');
+
+    function updateLineNumbers() {
+        const lines = textarea.value.split('\n').length;
+        lineNumbers.innerHTML = Array.from({ length: lines }, (_, i) => "<span>" + (i + 1)+"</span>").join('<br>');
+    }
+
+    textarea.addEventListener('input', updateLineNumbers);
+    textarea.addEventListener('scroll', () => {
+        lineNumbers.scrollTop = textarea.scrollTop;
+    });
+
+    // Initialize line numbers
+    updateLineNumbers();
+</script>
+<style>
+    .container {
+        /*display: flex;*/
+    }
+
+    .line-numbers {
+        padding: 10px;
+        text-align: right;
+        user-select: none;
+        border-right: 1px solid #ddd;
+    }
+
+    textarea {
+        flex: 1;
+        resize: none;
+    }
+    label{
+        font-weight: 600;
+    }
+</style>

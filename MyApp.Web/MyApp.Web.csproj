@@ -10,6 +10,7 @@
   <ItemGroup>
 	  <PackageReference Include="AutoMapper" Version="13.0.1" />
 	  <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+	  <PackageReference Include="Markdig" Version="0.37.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.33" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.33" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.32">
@@ -36,7 +37,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Core\Service\" />
     <Folder Include="Data\" />
     <Folder Include="Migrations\" />
   </ItemGroup>

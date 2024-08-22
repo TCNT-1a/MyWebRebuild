@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MyApp.Web.Infra.Data;
+using NuGet.Protocol;
 
 namespace MyApp.Web.Controllers
 {
@@ -50,13 +51,41 @@ namespace MyApp.Web.Controllers
         }
 
         // GET: Posts/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var categories = _context.Categories.ToListAsync();
-            var tags = _context.Tags.ToListAsync();
-            ViewData["tags"] = tags;
-            ViewData["categories"] = categories;
+            var result =await getCategoryTag();
+            ViewBag.categories = result.CategorySelectList;
+            ViewBag.tags = result.TagSelectList;
             return View();
+        }
+        private async Task<ResultData> getCategoryTag()
+        {
+            var categories = await _context.Categories.Where(p => p.IsDeleted == false).ToListAsync();
+            var tags = await _context.Tags.Where(p => p.IsDeleted == false).ToListAsync();
+
+
+            var categorySelectList = categories.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.Name
+            }).ToList();
+            categorySelectList.Insert(0, new SelectListItem
+            {
+                Value = "",
+                Text = "-- Select Category --"
+            });
+
+            var tagSelectList = tags.Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name }).ToList();
+            var result = new ResultData {
+                CategorySelectList = categorySelectList,
+                TagSelectList = tagSelectList
+            };
+            return result;
+        }
+        class ResultData
+        {
+            public List<SelectListItem> CategorySelectList { get; set; }
+            public List<SelectListItem> TagSelectList { get; set; }
         }
 
         // POST: Posts/Create
@@ -64,8 +93,12 @@ namespace MyApp.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,PostView,Content,Id,CreatedDate,UpdatedDate,IsDeleted")] Post post)
+        public async Task<IActionResult> Create([Bind("Title,PostView,Content,Id")] Post post, string[] tags)
         {
+            var result = await getCategoryTag();
+            ViewBag.categories = result.CategorySelectList;
+            ViewBag.tags = result.TagSelectList;
+
             if (ModelState.IsValid)
             {
                 _context.Add(post);
