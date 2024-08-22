@@ -1431,11 +1431,6 @@ input:checked + .toggle-bg {
   background-color: rgb(255 255 255 / 0.5);
 }
 
-.bg-gray-700 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(55 65 81 / var(--tw-bg-opacity));
-}
-
 .p-1 {
   padding: 0.25rem;
 }
@@ -1872,6 +1867,11 @@ div.row > :not([hidden]) ~ :not([hidden]) {
 .btn-danger {
   width: -moz-fit-content;
   width: fit-content;
+}
+
+.text-danger {
+  --tw-text-opacity: 1;
+  color: rgb(224 36 36 / var(--tw-text-opacity));
 }
 
 .txt-primary {
