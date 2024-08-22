@@ -26,10 +26,10 @@
             <label asp-for="Tags" class="control-label w-1/4"></label>
             @{
                 foreach(var tag in tags){
-                        <div>
-                            <input type="checkbox" name="tags" value="@tag.Value" />
-                            <label for="music">@tag.Text</label>
-                        </div>
+                    <div>
+                        <input type="checkbox" name="tags" value="@tag.Value" />
+                        <label for="@tag.Value">@tag.Text</label>
+                    </div>
                 }
             }           
         </div>

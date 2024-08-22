@@ -15,7 +15,7 @@ namespace MyApp.Web.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.32");
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.33");
 
             modelBuilder.Entity("MyApp.Web.Infra.Data.Category", b =>
                 {
@@ -113,7 +113,8 @@ namespace MyApp.Web.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("PostView")
+                    b.Property<int?>("PostView")
+                        .IsRequired()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")

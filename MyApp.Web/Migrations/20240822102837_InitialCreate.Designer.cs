@@ -11,13 +11,13 @@ using MyApp.Web.Infra.Data;
 namespace MyApp.Web.Migrations
 {
     [DbContext(typeof(BloggingContext))]
-    [Migration("20240820012046_InitialCreate")]
+    [Migration("20240822102837_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.32");
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.33");
 
             modelBuilder.Entity("MyApp.Web.Infra.Data.Category", b =>
                 {
@@ -115,7 +115,8 @@ namespace MyApp.Web.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("PostView")
+                    b.Property<int?>("PostView")
+                        .IsRequired()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
