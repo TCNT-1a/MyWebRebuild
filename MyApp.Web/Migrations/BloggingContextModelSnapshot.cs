@@ -114,7 +114,6 @@ namespace MyApp.Web.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("PostView")
-                        .IsRequired()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")

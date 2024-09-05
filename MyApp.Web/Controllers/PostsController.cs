@@ -93,7 +93,7 @@ namespace MyApp.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,PostView,Content,Id")] Post post, string[] tags)
+        public async Task<IActionResult> Create([Bind("Title,Content,Id")] Post post, string[] tags)
         {
             var result = await getCategoryTag();
             ViewBag.categories = result.CategorySelectList;

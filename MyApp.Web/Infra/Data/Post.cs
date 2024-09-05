@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,8 @@ namespace MyApp.Web.Infra.Data
     {
         [Required(ErrorMessage ="The field is required")]
         public string Title { get; set; }
-        [Required(ErrorMessage = "The field is required")]
+        //[Required(ErrorMessage = "The field is required")]
+        //[DefaultValue (0)]
         public int? PostView { get; set; }
         [Required(ErrorMessage = "The field is required")]
         public string Content { get; set; }

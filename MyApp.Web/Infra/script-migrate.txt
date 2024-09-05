@@ -29,3 +29,4 @@ dotnet aspnet-codegenerator razorpage -m MyApp.Infrastructure.Data.Post -dc MyWe
 
 dotnet tool install -g dotnet-aspnet-codegenerator
 
+ 

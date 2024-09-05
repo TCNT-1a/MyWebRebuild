@@ -11,7 +11,7 @@ using MyApp.Web.Infra.Data;
 namespace MyApp.Web.Migrations
 {
     [DbContext(typeof(BloggingContext))]
-    [Migration("20240822102837_InitialCreate")]
+    [Migration("20240905063503_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -116,7 +116,6 @@ namespace MyApp.Web.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("PostView")
-                        .IsRequired()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
