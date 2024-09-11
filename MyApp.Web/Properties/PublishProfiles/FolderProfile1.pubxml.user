@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\Users\n\Documents\Project\MyWebRebuild\MyApp.Web\bin\Release\net6.0\publish\</_PublishTargetUrl>
-    <History>True|2024-09-10T03:26:32.1803851Z;</History>
+    <History>True|2024-09-11T03:22:52.5287270Z;True|2024-09-10T10:26:32.1803851+07:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
 </Project>

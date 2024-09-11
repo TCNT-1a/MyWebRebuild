@@ -11,6 +11,14 @@ namespace MyApp.Web.Controllers.Api
     [ApiController]
     public class TradingController : ControllerBase
     {
+        private readonly IConfiguration _configuration;
+        private readonly List<TelegramConfig> _telegrams;
+
+        public TradingController(IConfiguration configuration)
+        {
+            this._configuration = configuration;
+            _telegrams = configuration.GetSection("Telegrams").Get<List<TelegramConfig>>();
+        }
         [HttpPost("CryptoSpot")]
         public IActionResult Crypto([FromBody] InforCandle candle)
         {
@@ -18,28 +26,21 @@ namespace MyApp.Web.Controllers.Api
             var ticker = candle.ticker;
             var close = candle.close;
             var time = candle.time;
-            var msg = "Signal BUY/SELL spot\n" + signal + " #" + ticker + "\n";
-            msg = msg + " - Price: " + close + "\n";
-            msg = msg + " - Time UTC: " + time + "\n";
-            msg = msg + " - Time GMT+7: " + ConvertToTimeVN(time) + "\n";
+            var msg = "<b>Signal BUY/SELL spot</b>\n" + signal + " #" + ticker + "\n";
+            msg = msg + " - Price: <b>" + close + "</b>\n";
+            msg = msg + " - Time UTC: <em>" + time + "</em>\n";
+            msg = msg + " - Time GMT+7:<em>" + TimeHelper.ConvertToTimeVN(time) + "</em>\n";
 
-            //TOKEN id of bot chat telegram
-            string token = "7457090210:AAHFDTBhpux_v-NoD44YVhK1LgmxJ3Lp4YU";
-            string chatId = "-1002451917277_1";
-
-            SendTelegramMessage(token, chatId, msg);
-
+            foreach(var telegram in _telegrams)
+            {
+                if(telegram.CanSend)
+                    SendTelegramMessage(telegram.Token,telegram.ChatId, msg);
+            }
+            
             var r = new ResultTradingView { status = "success" };
             return Ok(r);
         }
-        public string ConvertToTimeVN(string utcTimeString)
-        {
-            DateTime utcTime = DateTime.Parse(utcTimeString, null, System.Globalization.DateTimeStyles.RoundtripKind);
-            TimeZoneInfo gmtPlus7 = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
-            DateTime gmtPlus7Time = TimeZoneInfo.ConvertTimeFromUtc(utcTime, gmtPlus7);
-            string formattedTime = gmtPlus7Time.ToString("dd/MM/yyyy HH:mm:ss");
-            return formattedTime;
-        }
+
 
         static async Task SendTelegramMessage(string token, string chatId, string message)
         {
@@ -50,7 +51,8 @@ namespace MyApp.Web.Controllers.Api
                 var payload = new
                 {
                     chat_id = chatId,
-                    text = message
+                    text = message,
+                    parse_mode = "HTML"
                 };
 
                 var jsonPayload = new StringContent(
@@ -70,11 +72,16 @@ namespace MyApp.Web.Controllers.Api
                 }
             }
         }
-
+    }
+    public class TelegramConfig
+    {
+        public string ChatId { get; set; }
+        public string Token { get; set; }
+        public bool CanSend { get; set; }
     }
     public class InforCandle
     {
-        public string signal { get; set; } 
+        public string signal { get; set; }
         public string ticker { get; set; }
         public string close { get; set; }
         public string time { get; set; }
@@ -83,5 +90,15 @@ namespace MyApp.Web.Controllers.Api
     class ResultTradingView
     {
         public string status { get; set; }
+    }
+    public class TimeHelper {
+        public static string ConvertToTimeVN(string utcTimeString)
+        {
+            DateTime utcTime = DateTime.Parse(utcTimeString, null, System.Globalization.DateTimeStyles.RoundtripKind);
+            TimeZoneInfo gmtPlus7 = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+            DateTime gmtPlus7Time = TimeZoneInfo.ConvertTimeFromUtc(utcTime, gmtPlus7);
+            string formattedTime = gmtPlus7Time.ToString("dd-MM-yyyy HH:mm:ss");
+            return formattedTime;
+        }
     }
 }
