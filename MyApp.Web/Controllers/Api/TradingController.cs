@@ -20,8 +20,8 @@ namespace MyApp.Web.Controllers.Api
             var time = candle.time;
             var msg = "Signal BUY/SELL spot\n" + signal + " #" + ticker + "\n";
             msg = msg + " - Price: " + close + "\n";
-            msg = msg + " - Time: " + time + "\n";
-            msg = msg + " - Version 2";
+            msg = msg + " - Time UTC: " + time + "\n";
+            msg = msg + " - Time GMT+7: " + ConvertToTimeVN(time) + "\n";
 
             //TOKEN id of bot chat telegram
             string token = "7457090210:AAHFDTBhpux_v-NoD44YVhK1LgmxJ3Lp4YU";
@@ -32,7 +32,14 @@ namespace MyApp.Web.Controllers.Api
             var r = new ResultTradingView { status = "success" };
             return Ok(r);
         }
-       
+        public string ConvertToTimeVN(string utcTimeString)
+        {
+            DateTime utcTime = DateTime.Parse(utcTimeString, null, System.Globalization.DateTimeStyles.RoundtripKind);
+            TimeZoneInfo gmtPlus7 = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+            DateTime gmtPlus7Time = TimeZoneInfo.ConvertTimeFromUtc(utcTime, gmtPlus7);
+            string formattedTime = gmtPlus7Time.ToString("dd/MM/yyyy HH:mm:ss");
+            return formattedTime;
+        }
 
         static async Task SendTelegramMessage(string token, string chatId, string message)
         {
