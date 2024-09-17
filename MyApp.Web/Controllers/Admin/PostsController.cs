@@ -8,8 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using MyApp.Web.Infra.Data;
 using NuGet.Protocol;
 
-namespace MyApp.Web.Controllers
+namespace MyApp.Web.Controllers.Admin
 {
+    [Route("admin/[controller]")]
     public class PostsController : Controller
     {
         private readonly BloggingContext _context;
@@ -19,7 +20,7 @@ namespace MyApp.Web.Controllers
             _context = context;
         }
 
-        // GET: Posts
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var posts = await _context.Posts
@@ -32,7 +33,7 @@ namespace MyApp.Web.Controllers
                         Problem("Entity set 'BloggingContext.Posts'  is null.");
         }
 
-        // GET: Posts/Details/5
+        [HttpGet("details")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Posts == null)
@@ -50,10 +51,10 @@ namespace MyApp.Web.Controllers
             return View(post);
         }
 
-        // GET: Posts/Create
+        [HttpGet("create")]
         public async Task<IActionResult> Create()
         {
-            var result =await getCategoryTag();
+            var result = await getCategoryTag();
             ViewBag.categories = result.CategorySelectList;
             ViewBag.tags = result.TagSelectList;
             return View();
@@ -76,7 +77,8 @@ namespace MyApp.Web.Controllers
             });
 
             var tagSelectList = tags.Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name }).ToList();
-            var result = new ResultData {
+            var result = new ResultData
+            {
                 CategorySelectList = categorySelectList,
                 TagSelectList = tagSelectList
             };
@@ -88,10 +90,7 @@ namespace MyApp.Web.Controllers
             public List<SelectListItem> TagSelectList { get; set; }
         }
 
-        // POST: Posts/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost("create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Title,Content,Id")] Post post, string[] tags)
         {
@@ -108,7 +107,7 @@ namespace MyApp.Web.Controllers
             return View(post);
         }
 
-        // GET: Posts/Edit/5
+        [HttpGet("edit")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Posts == null)
@@ -124,10 +123,7 @@ namespace MyApp.Web.Controllers
             return View(post);
         }
 
-        // POST: Posts/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost("edit")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Title,PostView,Content,Id,CreatedDate,UpdatedDate,IsDeleted")] Post post)
         {
@@ -159,7 +155,7 @@ namespace MyApp.Web.Controllers
             return View(post);
         }
 
-        // GET: Posts/Delete/5
+        [HttpGet("delete")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Posts == null)
@@ -177,8 +173,7 @@ namespace MyApp.Web.Controllers
             return View(post);
         }
 
-        // POST: Posts/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost("delete"), ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

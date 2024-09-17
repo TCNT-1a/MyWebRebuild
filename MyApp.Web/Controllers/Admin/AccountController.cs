@@ -9,9 +9,9 @@ using MyApp.Web.Helper;
 using MyApp.Web.Models.Account;
 using MyApp.Web.Abstraction;
 
-namespace MyApp.Web.Controllers
+namespace MyApp.Web.Controllers.Admin
 {
-    //[Route("taikhoan")]
+    [Route("admin/[controller]")]
     public class AccountController : Controller
     {
         //private readonly UserManager<ApplicationUser> userManager;
@@ -20,13 +20,14 @@ namespace MyApp.Web.Controllers
         private readonly BloggingContext _context;
         public AccountController(BloggingContext context)
         {
-            this._context = context;
+            _context = context;
         }
+        [HttpGet("")]
         public IActionResult Index()
         {
             return View();
         }
-        //[Route("dangnhap")]
+        [HttpGet("login")]
         public IActionResult Login(string returnUrl = "")
         {
             ViewData["ReturnUrl"] = returnUrl;
@@ -55,7 +56,7 @@ namespace MyApp.Web.Controllers
         // }
 
         // //
-        [HttpPost]
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromForm] LoginModel loginModel, [FromQuery] string? returnUrl)
         {
             if (ModelState.IsValid)

@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MyApp.Web.Infra.Data;
 
-namespace MyApp.Web.Controllers
+namespace MyApp.Web.Controllers.Admin
 {
+    [Route("admin/[controller]")]
     public class CategoriesController : Controller
     {
         private readonly BloggingContext _context;
@@ -18,15 +19,18 @@ namespace MyApp.Web.Controllers
             _context = context;
         }
 
-        // GET: Categories
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
-              return _context.Categories != null ? 
-                          View(await _context.Categories.Where(p=>p.IsDeleted==false).ToListAsync()) :
-                          Problem("Entity set 'BloggingContext.Categories'  is null.");
+            return _context.Categories != null ?
+                        View(await _context.Categories
+                        .Where(p => p.IsDeleted == false)
+                        .ToListAsync()) :
+                        Problem("Entity set 'BloggingContext.Categories'  is null.");
         }
 
-        // GET: Categories/Details/5
+        
+        [HttpGet("details")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Categories == null)
@@ -44,16 +48,13 @@ namespace MyApp.Web.Controllers
             return View(category);
         }
 
-        // GET: Categories/Create
+        [HttpGet("create")]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Categories/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost("create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,Slug,isPublished")] Category category)
         {
@@ -66,7 +67,7 @@ namespace MyApp.Web.Controllers
             return View(category);
         }
 
-        // GET: Categories/Edit/5
+        [HttpGet("edit")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Categories == null)
@@ -82,10 +83,8 @@ namespace MyApp.Web.Controllers
             return View(category);
         }
 
-        // POST: Categories/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        
+        [HttpPost("edit")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Name,Slug,isPublished")] Category category)
         {
@@ -119,7 +118,7 @@ namespace MyApp.Web.Controllers
             return View(category);
         }
 
-        // GET: Categories/Delete/5
+        [HttpGet("delete")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Categories == null)
@@ -137,8 +136,7 @@ namespace MyApp.Web.Controllers
             return View(category);
         }
 
-        // POST: Categories/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost("delete"), ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -153,14 +151,14 @@ namespace MyApp.Web.Controllers
                 _context.Categories.Update(category);
                 //_context.Categories.Remove(category);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CategoryExists(int id)
         {
-          return (_context.Categories?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Categories?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

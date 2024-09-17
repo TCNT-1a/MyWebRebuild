@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MyApp.Web.Infra.Data;
 
-namespace MyApp.Web.Controllers
+namespace MyApp.Web.Controllers.Admin
 {
+    [Route("admin/[controller]")]
     public class HeadingTagsController : Controller
     {
         private readonly BloggingContext _context;
@@ -18,15 +19,15 @@ namespace MyApp.Web.Controllers
             _context = context;
         }
 
-        // GET: HeadingTags
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
-              return _context.HeadingTags != null ? 
-                          View(await _context.HeadingTags.Where(p=>p.IsDeleted==false).ToListAsync()) :
-                          Problem("Entity set 'BloggingContext.HeadingTags'  is null.");
+            return _context.HeadingTags != null ?
+                        View(await _context.HeadingTags.Where(p => p.IsDeleted == false).ToListAsync()) :
+                        Problem("Entity set 'BloggingContext.HeadingTags'  is null.");
         }
 
-        // GET: HeadingTags/Details/5
+        [HttpGet("details")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.HeadingTags == null)
@@ -44,16 +45,13 @@ namespace MyApp.Web.Controllers
             return View(headingTag);
         }
 
-        // GET: HeadingTags/Create
+        [HttpGet("create")]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: HeadingTags/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost("create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Title,NoIndex,Canonical,MetaDescription")] HeadingTag headingTag)
         {
@@ -66,7 +64,7 @@ namespace MyApp.Web.Controllers
             return View(headingTag);
         }
 
-        // GET: HeadingTags/Edit/5
+        [HttpGet("edit")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.HeadingTags == null)
@@ -82,10 +80,8 @@ namespace MyApp.Web.Controllers
             return View(headingTag);
         }
 
-        // POST: HeadingTags/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        
+        [HttpPost("edit")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Title,NoIndex,Canonical,MetaDescription")] HeadingTag headingTag)
         {
@@ -117,7 +113,7 @@ namespace MyApp.Web.Controllers
             return View(headingTag);
         }
 
-        // GET: HeadingTags/Delete/5
+        [HttpGet("delete")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.HeadingTags == null)
@@ -135,8 +131,7 @@ namespace MyApp.Web.Controllers
             return View(headingTag);
         }
 
-        // POST: HeadingTags/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost("delete"), ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -151,14 +146,14 @@ namespace MyApp.Web.Controllers
                 _context.HeadingTags.Update(headingTag);
                 //_context.HeadingTags.Remove(headingTag);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool HeadingTagExists(int id)
         {
-          return (_context.HeadingTags?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.HeadingTags?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
