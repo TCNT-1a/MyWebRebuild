@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -69,7 +70,20 @@ static void BuildSwagger(WebApplicationBuilder builder)
     {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "MyApp.Web", Version = "v1" });
         c.EnableAnnotations(); // Kích hoạt chú thích cho Swagger
+        // Lọc chỉ bao gồm API controllers
+        c.DocInclusionPredicate((docName, apiDesc) =>
+        {
+            var controllerActionDescriptor = apiDesc.ActionDescriptor as ControllerActionDescriptor;
+            if (controllerActionDescriptor != null)
+            {
+                // Chỉ bao gồm controller có [ApiController] attribute
+                return controllerActionDescriptor.ControllerTypeInfo.GetCustomAttributes(typeof(ApiControllerAttribute), true).Any();
+            }
+            return false;
+        });
     });
+
+
 }
 static void BuildIdentity(WebApplicationBuilder builder)
 {
