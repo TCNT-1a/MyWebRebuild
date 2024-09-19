@@ -199,6 +199,10 @@ static void AppConfigMvc(WebApplication app)
             name: "default",
             pattern: "{controller=Home}/{action=Index}/{id?}");
         endpoints.MapControllers();
+        endpoints.MapControllerRoute(
+            name: "areas",
+            pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+          );
         //endpoints.MapControllerRoute(
         //    name: "dev",
         //    pattern: "{controller=TestBinding}/{action=TestRouting}/{id1}/{id2}");
